@@ -62,7 +62,7 @@ public abstract class MixinTitleScreen extends Screen {
 					if (help) {
 						Util.getOperatingSystem().open("https://github.com/Chocohead/OptiFabric/blob/master/README.md");
 					} else {
-						Util.getOperatingSystem().open(new File(FabricLoader.getInstance().getGameDirectory(), "mods"));
+						Util.getOperatingSystem().open(new File(FabricLoader.getInstance().getGameDirectory(), "rtuserver/1.19.4"));
 					}
 				};
 				break;
