@@ -12,6 +12,7 @@ import java.util.zip.ZipException;
 
 import com.google.gson.stream.JsonReader;
 
+import net.fabricmc.loader.impl.FabricLoaderImpl;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
@@ -30,7 +31,7 @@ public class OptifineVersion {
 
 	public static File findOptifineJar() throws IOException {
 		@SuppressWarnings("deprecation")
-		File modsDir = new File(FabricLoader.getInstance().getGameDirectory(), "rtuserver/1.19.4");
+		File modsDir = new File(FabricLoader.getInstance().getGameDirectory(), "rtuserver/" + ((FabricLoaderImpl)FabricLoader.getInstance()).getGameProvider().getRawGameVersion());
 		File[] mods = modsDir.listFiles();
 
 		if (mods != null) {

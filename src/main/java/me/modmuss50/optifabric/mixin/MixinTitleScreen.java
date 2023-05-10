@@ -4,6 +4,7 @@ import java.io.File;
 
 import it.unimi.dsi.fastutil.booleans.BooleanConsumer;
 
+import net.fabricmc.loader.impl.FabricLoaderImpl;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -62,7 +63,7 @@ public abstract class MixinTitleScreen extends Screen {
 					if (help) {
 						Util.getOperatingSystem().open("https://github.com/Chocohead/OptiFabric/blob/master/README.md");
 					} else {
-						Util.getOperatingSystem().open(new File(FabricLoader.getInstance().getGameDirectory(), "rtuserver/1.19.4"));
+						Util.getOperatingSystem().open(new File(FabricLoader.getInstance().getGameDirectory(), "rtuserver/" + ((FabricLoaderImpl)FabricLoader.getInstance()).getGameProvider().getRawGameVersion()));
 					}
 				};
 				break;
