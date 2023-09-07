@@ -73,6 +73,7 @@ compileJava {
 		method 'net/minecraft/client/gui/screen/Screen', '(Lnet/minecraft/client/util/math/MatrixStack;IIF)V', 'renderWithTooltip', 'method_47413'
 		classes += ['net/minecraft/class_5944': 'net/minecraft/class_5944']
 		method 'net/minecraft/class_5944', '(Lnet/minecraft/class_5912;Lnet/minecraft/util/Identifier;Lnet/minecraft/client/render/VertexFormat;)V', '<init>', '<init>'
+		method 'net/minecraft/client/gui/screen/Screen', '(Lnet/minecraft/class_332;IIF)V', 'renderWithTooltip', 'method_47413'
 	}
 }
 

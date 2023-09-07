@@ -23,7 +23,7 @@ public class BorderlessMiningMixinPlugin extends InterceptingMixinPlugin {
 
 			for (MethodNode method : targetClass.methods) {
 				if (init.equals(method.name) && "()V".equals(method.desc)) {
-					Member createSimpleOption = RemappingUtils.mapMethod("class_7172", "<init>", "(Ljava/lang/String;Lnet/minecraft/class_7172$class_7307;Lnet/minecraft/class_7172$class_7303;Lnet/minecraft/class_7172$class_7178;Ljava/lang/Object;Ljava/util/function/Consumer;)V");
+					Member createSimpleOption = RemappingUtils.mapMethod("class_7172", "<init>", getCreateSimpleOptionInitDescriptor());
 					InsnList extra = new InsnList();
 					LabelNode skip = new LabelNode();
 
@@ -38,5 +38,9 @@ public class BorderlessMiningMixinPlugin extends InterceptingMixinPlugin {
 		}
 
 		super.preApply(targetClassName, targetClass, mixinClassName, mixinInfo);
+	}
+
+	protected String getCreateSimpleOptionInitDescriptor() {
+		return "(Ljava/lang/String;Lnet/minecraft/class_7172$class_7307;Lnet/minecraft/class_7172$class_7303;Lnet/minecraft/class_7172$class_7178;Ljava/lang/Object;Ljava/util/function/Consumer;)V";
 	}
 }

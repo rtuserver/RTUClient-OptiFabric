@@ -9,13 +9,13 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Coerce;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.gui.screen.ConfirmScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
@@ -23,6 +23,7 @@ import net.minecraft.util.math.MathHelper;
 import net.fabricmc.loader.api.FabricLoader;
 
 import me.modmuss50.optifabric.compat.fabricscreenapi.Events;
+import me.modmuss50.optifabric.mod.DrawContext;
 import me.modmuss50.optifabric.mod.OptifabricError;
 import me.modmuss50.optifabric.mod.OptifabricSetup;
 import me.modmuss50.optifabric.mod.OptifineVersion;
@@ -91,15 +92,15 @@ public abstract class MixinTitleScreen extends Screen {
 		}
 	}
 
-	@Inject(method = "render", at = @At("RETURN"))
-	private void render(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo info) {
+	@Inject(method = {"render(Lnet/minecraft/client/util/math/MatrixStack;IIF)V", "method_25394(Lnet/minecraft/class_332;IIF)V"}, at = @At("RETURN"), require = 1)
+	private void render(@Coerce Object matricesOrContext, int mouseX, int mouseY, float delta, CallbackInfo info) {
 		if (!OptifabricError.hasError()) {
 			float fadeTime = doBackgroundFade ? (Util.getMeasuringTimeMs() - backgroundFadeStart) / 1000F : 1F;
 			float fadeColor = doBackgroundFade ? MathHelper.clamp(fadeTime - 1F, 0F, 1F) : 1F;
 
 			int alpha = MathHelper.ceil(fadeColor * 255F) << 24;
 			if ((alpha & 0xFC000000) != 0) {
-				textRenderer.drawWithShadow(matrices, OptifineVersion.version, 2, height - 20, 0xFFFFFF | alpha);
+				DrawContext.drawTextWithShadow(textRenderer, matricesOrContext, OptifineVersion.version, 2, height -20, 0xFFFFFF | alpha);
 			}
 		}
 	}

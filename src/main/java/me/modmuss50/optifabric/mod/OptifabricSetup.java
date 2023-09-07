@@ -67,7 +67,7 @@ public class OptifabricSetup implements Runnable {
 				return injector.predictFuture(RemappingUtils.getClassName("class_702")).filter(node -> {//ParticleManager
 					//(MatrixStack, VertexConsumerProvider$Immediate, LightmapTextureManager, Camera, Frustum)
 					String desc = RemappingUtils.mapMethodDescriptor("(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597$class_4598;"
-																	+ "Lnet/minecraft/class_765;Lnet/minecraft/class_4184;FLnet/minecraft/class_4604;)V");
+							+ "Lnet/minecraft/class_765;Lnet/minecraft/class_4184;FLnet/minecraft/class_4604;)V");
 
 					for (MethodNode method : node.methods) {
 						if (("renderParticles".equals(method.name) || "render".equals(method.name)) && desc.equals(method.desc)) {
@@ -177,7 +177,7 @@ public class OptifabricSetup implements Runnable {
 
 					for (MethodNode method : node.methods) {
 						if ("renderBatched".equals(method.name) && method.desc.endsWith(desc)) {
-							Mixins.addConfiguration("optifabric.compat.indigo.newer-mixins.json");							
+							Mixins.addConfiguration("optifabric.compat.indigo.newer-mixins.json");
 							return;
 						}
 					}
@@ -210,7 +210,11 @@ public class OptifabricSetup implements Runnable {
 		}
 
 		if (isPresent("fabric-screen-api-v1")) {
-			if (isPresent("minecraft", ">=1.19.3")) {
+			if (isPresent("minecraft", ">=1.20")) {
+				Mixins.addConfiguration("optifabric.compat.fabric-screen-api.new4er-mixins.json");
+			} else if (isPresent("fabric-api", ">=0.81.0")) {
+				Mixins.addConfiguration("optifabric.compat.fabric-screen-api.new3er-mixins.json");
+			} else if (isPresent("minecraft", ">=1.19.3")) {
 				Mixins.addConfiguration("optifabric.compat.fabric-screen-api.newerer-mixins.json");
 			} else if (isPresent("minecraft", ">=1.17-alpha.21.10.a")) {
 				if (farPlanePresent.getAsBoolean()) {
@@ -235,7 +239,7 @@ public class OptifabricSetup implements Runnable {
 			Mixins.addConfiguration("optifabric.optifine.old-mixins.json");
 		}
 
-        if (isPresent("fabricloader", ">=0.13.0") && (isPresent("cloth-client-events-v0", ">=3.1.58") || isPresent("cloth-client-events-v0", ">=2.1.60 <3.0") || isPresent("cloth-client-events-v0", ">=1.6.59 <2.0"))) {
+		if (isPresent("fabricloader", ">=0.13.0") && (isPresent("cloth-client-events-v0", ">=3.1.58") || isPresent("cloth-client-events-v0", ">=2.1.60 <3.0") || isPresent("cloth-client-events-v0", ">=1.6.59 <2.0"))) {
 			// no mixins are needed -- cloth had a workaround for https://github.com/FabricMC/Mixin/issues/80
 			// but it is now fixed in fabricloader
 		} else if (isPresent("cloth-client-events-v0", ">=2.0")) {
@@ -377,7 +381,7 @@ public class OptifabricSetup implements Runnable {
 						}
 					}
 				});
-			}	
+			}
 		} else if (isPresent("charm", ">=3.0 <4.0")) {
 			Mixins.addConfiguration("optifabric.compat.charm.mixins.json");
 		} else if (isPresent("charm", ">=4.0")) {
@@ -400,7 +404,9 @@ public class OptifabricSetup implements Runnable {
 			Mixins.addConfiguration("optifabric.compat.images.mixins.json");
 		}
 
-		if (isPresent("architectury", ">=7.0.52")) {
+		if (isPresent("architectury", ">=9.0.6")) {
+			Mixins.addConfiguration("optifabric.compat.architectury-AB.new4er-mixins.json");
+		} else if (isPresent("architectury", ">=7.0.52")) {
 			Mixins.addConfiguration("optifabric.compat.architectury-AB.newererer-mixins.json");
 		} else if (isPresent("architectury", ">=3.7")) {
 			Mixins.addConfiguration("optifabric.compat.architectury-AB.newerer-mixins.json");
@@ -510,7 +516,9 @@ public class OptifabricSetup implements Runnable {
 			Mixins.addConfiguration("optifabric.compat.zoomify.mixins.json");
 		}
 
-		if (isPresent("borderlessmining", ">=1.1.3")) {
+		if (isPresent("borderlessmining", ">=1.1.6")) {
+			Mixins.addConfiguration("optifabric.compat.borderlessmining.new-mixins.json");
+		} else if (isPresent("borderlessmining", ">=1.1.3")) {
 			Mixins.addConfiguration("optifabric.compat.borderlessmining.mixins.json");
 		}
 
